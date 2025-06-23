@@ -59,7 +59,7 @@ public class TestCases extends ExcelDataProvider { // Lets us read the data
                 HashMap<String, String> movieDetail = Wrappers.verifyFilmCategory(driver, topSellingMoviesLocator);
                 Thread.sleep(2000);
                 SoftAssert sa = new SoftAssert();
-                sa.assertTrue(movieDetail.get("Rating").equals("A"), "The movie is not marked “A” for Mature");
+                sa.assertTrue(movieDetail.get("Rating").equals("U/A"), "The movie is not marked “A” for Mature");
                 String category = movieDetail.get("Category");
                 boolean status = (category.equals("Comedy") || category.equals("Drama")
                                 || category.equals("Animation"));
