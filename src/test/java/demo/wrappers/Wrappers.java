@@ -130,12 +130,17 @@ public class Wrappers {
     public static void getViewCounts(WebDriver driver, long maxCount) {
         try {
             int videoCount = 1;
-            WebElement videoElement = driver.findElement(By.xpath("(//ytd-item-section-renderer//div[@id='contents']//ytd-video-renderer)["+(videoCount++)+"]"));
+            // WebElement videoElement = driver.findElement(By.xpath("(//ytd-item-section-renderer//div[@id='contents']//ytd-video-renderer)["+(videoCount++)+"]"));
             long totalViewCount = 0;
             
             while(totalViewCount <= maxCount){
+                WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(50));
+                wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(".//following-sibling::ytd-video-renderer")));
+                WebElement videoElement = driver.findElement(By.xpath("(//ytd-item-section-renderer//div[@id='contents']//ytd-video-renderer)["+(videoCount++)+"]"));
+
                 JavascriptExecutor js = (JavascriptExecutor) driver;
                 js.executeScript("arguments[0].scrollIntoView({block: \"center\"})", videoElement);
+
                 WebElement videoView = videoElement.findElement(By.xpath(".//div[@id='metadata-line']/span"));
                 String videoViewCountStr = videoView.getText().split(" ")[0];
                 
@@ -152,14 +157,10 @@ public class Wrappers {
                 else if(viewCountSuffix.equals("B")){
                     multiplier = 1000000000;
                 }
-                totalViewCount+= currentVideoViewCount*multiplier;
+                totalViewCount += currentVideoViewCount * multiplier;
                 // System.out.println(totalViewCount >= maxCount);
                 // System.out.println(totalViewCount+" : "+ maxCount);
                 
-                WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(50));
-                wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(".//following-sibling::ytd-video-renderer")));
-                videoElement = driver.findElement(By.xpath("(//ytd-item-section-renderer//div[@id='contents']//ytd-video-renderer)["+(videoCount++)+"]"));
-
                 // WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(50));
                 // wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(".//following-sibling::ytd-video-renderer")));
                 // videoElement = videoElement.findElement(By.xpath(".//following-sibling::ytd-video-renderer"));
