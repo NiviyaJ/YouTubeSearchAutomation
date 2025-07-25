@@ -52,7 +52,7 @@
 - **Language:** Java  
 - **Automation Framework:** Selenium WebDriver  
 - **Testing Framework:** TestNG  
-- **Build Tool:** Gradle Wrapper  
+- **Build Tool:** Gradle
 - **Browser:** Google Chrome
 
 ---
